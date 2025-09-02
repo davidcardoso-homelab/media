@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-config-pv
+spec:
+  capacity:
+    storage: 150Mi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-path
+  hostPath:
+    path: /volumes/ssd/k3s/radarr_config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-config-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 150Mi
+  volumeName: radarr-config-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-filmes-pv
+spec:
+  capacity:
+    storage: 1.5Ti
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-path
+  hostPath:
+    path: /volumes/hdd/media/FILMES
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-filmes-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1.5Ti
+  volumeName: radarr-filmes-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-downloads-pv
+spec:
+  capacity:
+    storage: 1.5Ti
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-path
+  hostPath:
+    path: /volumes/hdd/media/downloads
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-downloads-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1.5Ti
+  volumeName: radarr-downloads-pv
