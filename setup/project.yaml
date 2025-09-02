@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: media
+  namespace: argocd
+spec:
+  description: Projeto de mídia gerenciado pelo ArgoCD
+  sourceRepos:
+    - 'git@github.com:davidcardoso-homelab/media.git'
+  destinations:
+    - namespace: media
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  orphanedResources:
+    warn: true
