@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      containers:
+        - name: jellyfin
+          image: jellyfin/jellyfin:latest
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/Sao_Paulo"
+            - name: JELLYFIN_PUBLISHED_SERVER_URL
+              value: "http://media.homelab"
+            - name: JELLYFIN_FFmpeg__EnableHardwareEncoding
+              value: "true"
+            - name: JELLYFIN_HardwareAccelerationType
+              value: "vaapi"
+          ports:
+            - containerPort: 8096
+            - containerPort: 8920
+            - containerPort: 1900
+              protocol: UDP
+            - containerPort: 7359
+              protocol: UDP
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: cache
+              mountPath: /cache
+            - name: media
+              mountPath: /media
+              readOnly: true
+            # Para aceleração de hardware Intel (ajuste conforme necessário)
+            - name: dev-dri
+              mountPath: /dev/dri
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "500Mi"
+            limits:
+              cpu: "4"
+              memory: "8Gi"
+          securityContext:
+            privileged: true
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: jellyfin-config-pvc
+        - name: cache
+          persistentVolumeClaim:
+            claimName: jellyfin-cache-pvc
+        - name: media
+          persistentVolumeClaim:
+            claimName: media-pvc
+        # Para Intel QuickSync (GPU)
+        - name: dev-dri
+          hostPath:
+            path: /dev/dri
+
