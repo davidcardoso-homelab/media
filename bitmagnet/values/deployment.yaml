@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitmagnet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitmagnet
+  template:
+    metadata:
+      labels:
+        app: bitmagnet
+    spec:
+      strategy:
+        type: Recreate
+      containers:
+        - name: bitmagnet
+          image: ghcr.io/bitmagnet-io/bitmagnet:latest
+          command: ["bitmagnet", "worker", "run", "--keys=http_server", "--keys=queue_server", "--keys=dht_crawler"]
+          env:
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: bitmagnet-postgres-secret
+                  key: POSTGRES_HOST
+            - name: POSTGRES_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: bitmagnet-postgres-secret
+                  key: POSTGRES_NAME
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: bitmagnet-postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bitmagnet-postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: TMDB_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bitmagnet-postgres-secret
+                  key: TMDB_API_KEY
+          ports:
+            - containerPort: 3333   # HTTP / Web UI
+            - containerPort: 3334   # BitTorrent TCP
+            - containerPort: 3334
+              protocol: UDP
+          volumeMounts:
+            - name: config
+              mountPath: /root/.config/bitmagnet
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: bitmagnet-config-pvc

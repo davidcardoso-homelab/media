@@ -103,4 +103,4 @@ spec:
 - Para upgrades das aplicações, siga as recomendações oficiais de cada projeto.
 
 ---
-Projeto mantido por [davidcardoso-homelab](https://github.com/davidcardoso-homelab/media).
+Projeto mantido por [davidcardoso-homelab](https://github.com/davidcardoso-homelab/).

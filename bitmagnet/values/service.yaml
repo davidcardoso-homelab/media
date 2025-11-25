@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bitmagnet
+spec:
+  selector:
+    app: bitmagnet
+  type: ClusterIP
+  ports:
+  - port: 3333
+    targetPort: 3333
+    name: web
+  - port: 3334
+    targetPort: 3334
+    protocol: TCP
+    name: bittorrent-tcp
+  - port: 3334
+    targetPort: 3334
+    protocol: UDP
+    name: bittorrent-udp
