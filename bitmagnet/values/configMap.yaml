@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bitmagnet-classifier-config
+data:
+  classifier.yml: |
+    $schema: https://bitmagnet.io/schemas/classifier-0.1.json
+
+    flags:
+      delete_xxx: true
+      delete_content_types:
+        - xxx
+        - audiobook
+        - music
+        - comic
+
+      

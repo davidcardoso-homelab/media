@@ -7,18 +7,22 @@ spec:
   selector:
     matchLabels:
       app: bitmagnet
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: bitmagnet
     spec:
-      strategy:
-        type: Recreate
       containers:
         - name: bitmagnet
           image: ghcr.io/bitmagnet-io/bitmagnet:latest
           command: ["bitmagnet", "worker", "run", "--keys=http_server", "--keys=queue_server", "--keys=dht_crawler"]
           env:
+            - name: CLASSIFIER_DELETE_XXX
+              value: "true"
+            - name: DHT_CRAWLER_SAVE_FILES_THRESHOLD
+              value: "500"
             - name: POSTGRES_HOST
               valueFrom:
                 secretKeyRef:
@@ -49,10 +53,41 @@ spec:
             - containerPort: 3334   # BitTorrent TCP
             - containerPort: 3334
               protocol: UDP
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "700Mi"
+              cpu: "600m"
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 3333
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: 3333
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
           volumeMounts:
             - name: config
               mountPath: /root/.config/bitmagnet
+            - name: classifier-config
+              mountPath: /root/.config/bitmagnet/classifier.yml
+              subPath: classifier.yml
       volumes:
       - name: config
         persistentVolumeClaim:
           claimName: bitmagnet-config-pvc
+      - name: classifier-config
+        configMap:
+          name: bitmagnet-classifier-config
