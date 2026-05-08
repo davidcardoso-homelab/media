@@ -15,6 +15,16 @@ spec:
       containers:
         - name: jellyfin
           image: jellyfin/jellyfin:latest
+          command:
+            - /bin/bash
+            - -c
+            - |
+              apt update && \
+              apt install -y \
+              vainfo \
+              i965-va-driver \
+              intel-media-va-driver && \
+              exec /jellyfin/jellyfin
           env:
             - name: PUID
               value: "1000"
@@ -55,6 +65,7 @@ spec:
               memory: "8Gi"
           securityContext:
             privileged: true
+            runAsUser: 0
       volumes:
         - name: config
           persistentVolumeClaim:
