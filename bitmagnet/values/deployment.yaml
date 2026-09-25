@@ -23,6 +23,8 @@ spec:
               value: "true"
             - name: DHT_CRAWLER_SAVE_FILES_THRESHOLD
               value: "500"
+            - name: DHT_CRAWLER_SCALING_FACTOR
+              value: "3"
             - name: POSTGRES_HOST
               valueFrom:
                 secretKeyRef:
