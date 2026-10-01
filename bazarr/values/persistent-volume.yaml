@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: bazarr-series-pv
+  name: bazarr-data-pv
 spec:
   capacity:
     storage: 1.5Ti
@@ -36,42 +36,16 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
-    path: /volumes/hdd/media/SERIES
+    path: /volumes/hdd/media
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: bazarr-series-pvc
+  name: bazarr-data-pvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1.5Ti
-  volumeName: bazarr-series-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: bazarr-filmes-pv
-spec:
-  capacity:
-    storage: 1.5Ti
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-path
-  hostPath:
-    path: /volumes/hdd/media/FILMES
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: bazarr-filmes-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1.5Ti
-  volumeName: bazarr-filmes-pv
+  volumeName: bazarr-data-pv

@@ -36,8 +36,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: downloads
-              mountPath: /downloads
+            - name: data
+              mountPath: /data
           resources:
             requests:
               memory: "50Mi"
@@ -49,6 +49,6 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: qbittorrent-config-pvc
-        - name: downloads
+        - name: data
           persistentVolumeClaim:
-            claimName: qbittorrent-downloads-pvc
+            claimName: qbittorrent-data-pvc

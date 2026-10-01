@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: qbittorrent-downloads-pv
+  name: qbittorrent-data-pv
 spec:
   capacity:
     storage: 1.5Ti
@@ -36,16 +36,16 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
-    path: /volumes/hdd/media/downloads
+    path: /volumes/hdd/media
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: qbittorrent-downloads-pvc
+  name: qbittorrent-data-pvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1.5Ti
-  volumeName: qbittorrent-downloads-pv
+  volumeName: qbittorrent-data-pv

@@ -29,10 +29,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: filmes
-              mountPath: /movies
-            - name: downloads
-              mountPath: /downloads
+            - name: data
+              mountPath: /data
           resources:
             requests:
               cpu: "50m"
@@ -44,9 +42,6 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: radarr-config-pvc
-        - name: filmes
+        - name: data
           persistentVolumeClaim:
-            claimName: radarr-filmes-pvc
-        - name: downloads
-          persistentVolumeClaim:
-            claimName: radarr-downloads-pvc
+            claimName: radarr-data-pvc

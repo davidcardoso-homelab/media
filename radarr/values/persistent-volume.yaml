@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: radarr-filmes-pv
+  name: radarr-data-pv
 spec:
   capacity:
     storage: 1.5Ti
@@ -36,42 +36,16 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
-    path: /volumes/hdd/media/FILMES
+    path: /volumes/hdd/media
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: radarr-filmes-pvc
+  name: radarr-data-pvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1.5Ti
-  volumeName: radarr-filmes-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: radarr-downloads-pv
-spec:
-  capacity:
-    storage: 1.5Ti
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-path
-  hostPath:
-    path: /volumes/hdd/media/downloads
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: radarr-downloads-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1.5Ti
-  volumeName: radarr-downloads-pv
+  volumeName: radarr-data-pv

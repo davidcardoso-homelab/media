@@ -29,10 +29,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: filmes
-              mountPath: /movies
-            - name: series
-              mountPath: /tv
+            - name: data
+              mountPath: /data
           resources:
             requests:
               cpu: "50m"
@@ -44,9 +42,6 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: bazarr-config-pvc
-        - name: filmes
+        - name: data
           persistentVolumeClaim:
-            claimName: bazarr-filmes-pvc
-        - name: series
-          persistentVolumeClaim:
-            claimName: bazarr-series-pvc
+            claimName: bazarr-data-pvc

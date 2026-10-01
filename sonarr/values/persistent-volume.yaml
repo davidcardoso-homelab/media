@@ -27,7 +27,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: sonarr-series-pv
+  name: sonarr-data-pv
 spec:
   capacity:
     storage: 1.5Ti
@@ -36,42 +36,16 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
-    path: /volumes/hdd/media/SERIES
+    path: /volumes/hdd/media
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sonarr-series-pvc
+  name: sonarr-data-pvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1.5Ti
-  volumeName: sonarr-series-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: sonarr-downloads-pv
-spec:
-  capacity:
-    storage: 1.5Ti
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-path
-  hostPath:
-    path: /volumes/hdd/media/downloads
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: sonarr-downloads-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1.5Ti
-  volumeName: sonarr-downloads-pv
+  volumeName: sonarr-data-pv
