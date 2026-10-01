@@ -4,6 +4,8 @@ metadata:
   name: bazarr
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: bazarr
@@ -37,7 +39,7 @@ spec:
               memory: "100Mi"
             limits:
               cpu: "0.5"
-              memory: "256Mi"
+              memory: "512Mi"
       volumes:
         - name: config
           persistentVolumeClaim:

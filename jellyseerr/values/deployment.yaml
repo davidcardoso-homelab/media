@@ -4,6 +4,8 @@ metadata:
   name: jellyseerr
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: jellyseerr
@@ -30,7 +32,7 @@ spec:
           image: ghcr.io/seerr-team/seerr:latest
           env:
             - name: LOG_LEVEL
-              value: "debug"
+              value: "info"
             - name: TZ
               value: "America/Sao_Paulo"
           ports:
