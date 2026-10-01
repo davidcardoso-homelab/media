@@ -7,7 +7,7 @@ spec:
     storage: 500Mi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
     path: /volumes/ssd/k3s/jellyfin/config
@@ -33,7 +33,7 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
     path: /volumes/ssd/k3s/jellyfin/cache
@@ -59,7 +59,7 @@ spec:
     storage: 1.5Ti
   accessModes:
     - ReadOnlyMany
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
     path: /volumes/hdd/media

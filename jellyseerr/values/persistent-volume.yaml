@@ -7,7 +7,7 @@ spec:
     storage: 50Mi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
     path: /volumes/ssd/k3s/jellyseerr_config
